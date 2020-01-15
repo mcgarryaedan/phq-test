@@ -1,0 +1,9 @@
+.page-item:not(.disabled) {
+  .page-link {
+    cursor: pointer;
+  }
+}
+
+.page-item.disabled {
+  opacity: 0.5;
+}

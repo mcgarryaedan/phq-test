@@ -1,0 +1,15 @@
+.thank-you {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: white;
+  padding: 50px;
+  z-index: 99;
+
+  .btn {
+    background: grey;
+    color: white;
+  }
+}

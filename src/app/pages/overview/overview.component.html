@@ -1,0 +1,64 @@
+<!-- ADD Bookmark -->
+<div class="row">
+  <div class="col-12">
+    <h1>Bookmarks</h1>
+    <form [formGroup]="bookmarkForm" (ngSubmit)="onSubmit()">
+      <div class="input-group add-bookmark" [class.invalidBookmark]="invalidBookmark">
+        <input type="text" class="form-control" [placeholder]="'Add a Bookmark'" formControlName="bookmark">
+        <div class="input-group-append">
+          <button type="submit" class="add-btn">Add</button>
+        </div>
+      </div>
+      <div class="error" *ngIf="invalidBookmark">
+        <sup>*</sup>Invalid Bookmark URL
+      </div>
+    </form>
+  </div>
+</div>
+<!-- LIST/EDIT/DELETE Bookmarks -->
+<div class="row">
+  <div class="col-12">
+    <br/><h2>Current Bookmarks</h2>
+    <phq-pagination
+      [bookmarks]="bookmarks"
+      [cPage]="cPage"
+      (setPageEmit)="setPage($event)"></phq-pagination>
+    <form [formGroup]="bookmarkEditForm" (ngSubmit)="onEdit()">
+      <table class="table">
+        <tr>
+          <th>Bookmark</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let bookmark of bookmarks | slice:startPos():startPos() + 20; let i = index">
+          <td>
+            <div *ngIf="isEditing(i)">
+              <div class="input-group add-bookmark" [class.invalidBookmark]="invalidEditBookmark">
+                <input type="text" class="form-control" [value]="bookmark" [placeholder]="'Edit Bookmark'" formControlName="bookmark">
+                <div class="input-group-append">
+                  <button type="submit" class="add-btn">Save</button>
+                </div>
+              </div>
+              <div class="error" *ngIf="invalidEditBookmark">
+                <sup>*</sup>Invalid Bookmark URL
+              </div>
+            </div>
+            <div *ngIf="!isEditing(i)">{{bookmark}}
+            </div>
+          </td>
+          <td width="50" (click)="editBookmark(i)"><a><fa-icon [icon]="faEdit"></fa-icon></a></td>
+          <td width="50" (click)="deleteBookmark(i)"><a><fa-icon [icon]="faTimes"></fa-icon></a></td>
+        </tr>
+      </table>
+    </form>
+    <phq-pagination
+      [bookmarks]="bookmarks"
+      [cPage]="cPage"
+      (setPageEmit)="setPage($event)"></phq-pagination>
+  </div>
+</div>
+<!-- THANK YOU PAGE --->
+<phq-thank-you
+  *ngIf="formSubmitted"
+  [cValue]="cValue"
+  (setBack)="setBack($event)"></phq-thank-you>
